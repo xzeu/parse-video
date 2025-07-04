@@ -1,7 +1,11 @@
-   * [支持平台](#支持平台)
-   * [安装](#安装)
-   * [Docker](#docker)
-   * [依赖模块](#依赖模块)
+- [其他语言版本](#其他语言版本)
+- [支持平台](#支持平台)
+  - [图集](#图集)
+  - [图集 LivePhoto](#图集-livephoto)
+  - [视频](#视频)
+- [安装](#安装)
+- [Docker](#docker)
+- [依赖模块](#依赖模块)
 
 Golang短视频去水印, 视频目前支持20个平台, 图集目前支持4个平台, 欢迎各位Star。
 > ps: 使用时, 请尽量使用app分享链接, 电脑网页版未做测试.
@@ -67,7 +71,7 @@ docker pull wujunwei928/parse-video
 
 运行 docker 容器, 端口 8080
 ```bash
-docker run -d -p 8080:8080 wujunwei928/parse-video
+docker run -d -p 8080:8080 xzeu/parse-video
 ```
 
 查看前端页面  

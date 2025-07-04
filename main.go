@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-
-	"github.com/wujunwei928/parse-video/parser"
+	"github.com/xzeu/parse-video/parser"
+	utils "github.com/xzeu/parse-video/utils"
 )
 
 type HttpResponse struct {
@@ -25,18 +25,35 @@ type HttpResponse struct {
 //go:embed templates/*
 var files embed.FS
 
+//go:embed assets/favicon.png
+var favicon embed.FS
+
+func FaviconMiddleware() gin.HandlerFunc {
+	subFS, _ := fs.Sub(favicon, "assets")
+	handler := func(c *gin.Context) {
+		if c.Request.URL.Path == "/favicon.ico" {
+			c.FileFromFS("favicon.png", http.FS(subFS))
+			c.Abort()
+		}
+	}
+	return handler
+}
+
 func main() {
 	r := gin.Default()
-
+	r.Use(utils.Cors(), FaviconMiddleware())
 	sub, err := fs.Sub(files, "templates")
 	if err != nil {
 		panic(err)
 	}
+
+	// 获取子目录
+	// staticSubDir, _ := fs.Sub(staticFiles, "static")
 	tmpl := template.Must(template.ParseFS(sub, "*.tmpl"))
 	r.SetHTMLTemplate(tmpl)
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index.tmpl", gin.H{
-			"title": "github.com/wujunwei928/parse-video Demo",
+			"title": "无水印解析视频分享链接服务",
 		})
 	})
 
@@ -79,7 +96,7 @@ func main() {
 	})
 
 	srv := &http.Server{
-		Addr:    ":8080",
+		Addr:    ":8081",
 		Handler: r,
 	}
 
@@ -91,7 +108,7 @@ func main() {
 	}()
 
 	// 等待中断信号以优雅地关闭服务器 (设置 5 秒的超时时间)
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt)
 	<-quit
 	log.Println("Shutdown Server ...")

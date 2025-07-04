@@ -34,7 +34,6 @@ func (d douYin) parseVideoID(videoId string) (*VideoParseInfo, error) {
 
 	jsonBytes := bytes.TrimSpace(findRes[1])
 	data := gjson.GetBytes(jsonBytes, "loaderData.video_(id)/page.videoInfoRes.item_list.0")
-
 	if !data.Exists() {
 		filterObj := gjson.GetBytes(
 			jsonBytes,
@@ -81,7 +80,6 @@ func (d douYin) parseVideoID(videoId string) (*VideoParseInfo, error) {
 	videoInfo.Author.Uid = data.Get("author.sec_uid").String()
 	videoInfo.Author.Name = data.Get("author.nickname").String()
 	videoInfo.Author.Avatar = data.Get("author.avatar_thumb.url_list.0").String()
-
 	// 视频地址非空时，获取302重定向之后的视频地址
 	// 图集时，视频地址为空，不处理
 	if len(videoInfo.VideoUrl) > 0 {

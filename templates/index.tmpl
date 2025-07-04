@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
-<meta name="renderer" content="webkit"/>
-<meta name="force-rendering" content="webkit"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>{{ .title }}</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"></script>
-<script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/2.1.4/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>{{ .title }}</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/css/mdui.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/mdui@1.0.0/dist/js/mdui.min.js"></script>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/2.1.4/jquery.min.js"></script>
 </head>
+
 <body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
-<style>
+  <style>
     ::selection {
-      background: rgba(0,149,255,.1);
+      background: rgba(0, 149, 255, .1);
     }
-    body:before{
+
+    body:before {
       top: 0;
       left: 0;
       right: 0;
@@ -26,127 +30,146 @@
       z-index: -1;
       content: "";
       position: fixed;
-      background-image: linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%);
+      background-image: linear-gradient(135deg, #CE9FFC 10%, #7367F0 100%);
     }
-    .mdui-textfield-input{
+
+    .mdui-textfield-input {
       float: left;
       width: 75%;
       text-transform: none;
     }
-    .mdui-btn{
+
+    .mdui-btn {
       width: 25%;
     }
+
     .mdui-container {
       max-width: 900px;
       margin-top: 6em;
       margin-bottom: 4em;
     }
-    .mdui-btn, .mdui-fab {
+
+    .mdui-btn,
+    .mdui-fab {
       min-width: 0px;
     }
-    .mdui-card{
+
+    .mdui-card {
       opacity: .8;
-      padding: 2em;;
+      padding: 2em;
+      ;
       border-radius: 6px;
     }
-    .down .mdui-btn{
+
+    .down .mdui-btn {
       width: auto;
       margin-left: 1.5em;
       margin-bottom: 0.5em;
     }
-    p{
-        opacity: .8;
-    }
-    .mdui-card-content{
-        padding: 16px 0 0 0;
-    }
-</style>
-<main class="mdui-container">
-<div class="mdui-card">
-	<img class="mdui-img-circle mdui-center" style="width: 150px;" src="https://cdn.jsdelivr.net/gh/5ime/img/avatar.jpg"/>
-  <h1 class='mdui-text-center'>在线短视频去水印解析</h1>
-  <div class="mdui-typo">
-    <p><strong>目前支持: </strong>抖音/皮皮虾/火山/微视/最右/快手/全民小视频/皮皮搞笑/梨视频/西瓜/微博/虎牙/绿洲/好看/逗拍/美拍/新片场/A站/全民K歌/6间房</p>
-    <p>
-        <strong>温馨提示: </strong><br/>
-        1. 粘贴视频地址时<u>无需删除文案</u><small> 但如果视频链接正确但解析失败请删掉文案后重试</small><br/>
-        2. 点击下载视频跳转时, 可能会被对应网站识别, 报 <u>403 Forbidden</u>, 可以在 下载视频 按钮, 右键复制链接地址, 新开浏览器标签页打开即可
-    </p>
-    <hr/>
-  </div>
-<div class="mdui-card-content mdui-typo">
-	<div class="mdui-textfield mdui-textfield-floating-label">
-		<input class="mdui-textfield-input" type="text" id="url" placeholder="请粘贴视频分享地址" required/>
-		<div class="mdui-textfield-error">
-			需要解析的视频地址不能为空
-		</div>
-		<button class="mdui-btn mdui-color-theme-accent mdui-ripple" onclick="setValue()">解析</button>
-	</div>
-</div>
-<div class="down mdui-text-center"></div>
-</div>
-</main>
-<script>
-function  setValue(){
-    var data =  document.getElementById("url").value;
-    let regex = /http[s]?:\/\/[\w.-]+[\w\/-]*[\w.-]*\??[\w=&:\-\+\%]*[/]*/;
-    var v =  data.match(regex)[0];
-    console.log(v);
 
-    var xmlhttp;
-    if(window.XMLHttpRequest){
-        xmlhttp=new XMLHttpRequest();
-    }
-    else{// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    p {
+      opacity: .8;
     }
 
-    // 链接地址需要用encodeURIComponent加密, 否则会导致原视频链接中&后的字符被识别为本链接的参数而丢弃
-    xmlhttp.open("GET","/video/share/url/parse?url=" + encodeURIComponent(v),false);
-    xmlhttp.send();
-    var jsonObj = JSON.parse(xmlhttp.responseText);
-    console.log(jsonObj);
-    if(jsonObj.code == 200){
+    .mdui-card-content {
+      padding: 16px 0 0 0;
+    }
+  </style>
+  <main class="mdui-container">
+    <div class="mdui-card">
+
+      <h1 class='mdui-text-center'>在线短视频去水印解析</h1>
+      <div class="mdui-typo">
+        <p><strong>目前支持: </strong>抖音/皮皮虾/火山/微视/最右/快手/全民小视频/皮皮搞笑/梨视频/西瓜/微博/虎牙/绿洲/好看/逗拍/美拍/新片场/A站/全民K歌/6间房/小红书</p>
+        <p>
+          <strong>温馨提示: </strong><br />
+          1. 粘贴视频地址时<u>无需删除文案</u><small> 但如果视频链接正确但解析失败请删掉文案后重试</small><br />
+          2. 点击下载视频跳转时, 可能会被对应网站识别, 报 <u>403 Forbidden</u>, 可以在 下载视频 按钮, 右键复制链接地址, 新开浏览器标签页打开即可
+        </p>
+        <hr />
+      </div>
+      <div class="mdui-card-content mdui-typo">
+        <div class="mdui-textfield mdui-textfield-floating-label">
+          <input class="mdui-textfield-input" type="text" id="url" placeholder="请粘贴视频分享地址" required />
+          <div class="mdui-textfield-error">
+            需要解析的视频地址不能为空
+          </div>
+          <button class="mdui-btn mdui-color-theme-accent mdui-ripple" onclick="setValue()">解析</button>
+        </div>
+      </div>
+      <div class="down mdui-text-center"></div>
+    </div>
+  </main>
+  <script>
+    function setValue() {
+      var data = document.getElementById("url").value;
+      let regex = /http[s]?:\/\/[\w.-]+[\w\/-]*[\w.-]*\??[\w=&:\-\+\%]*[/]*/;
+      var v = data.match(regex)[0];
+      console.log(v);
+
+      var xmlhttp;
+      if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+      }
+      else {// code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+
+      // 链接地址需要用encodeURIComponent加密, 否则会导致原视频链接中&后的字符被识别为本链接的参数而丢弃
+      xmlhttp.open("GET", "/video/share/url/parse?url=" + encodeURIComponent(v), false);
+      xmlhttp.send();
+      var jsonObj = JSON.parse(xmlhttp.responseText);
+      console.log(jsonObj);
+      if (jsonObj.code == 200) {
         mdui.snackbar({
-            message: '解析成功'
+          message: '解析成功'
         });
+        // var avatar_id = document.getElementById("avatar_thumb");
+        // avatar_id.src = jsonObj.data.author.avatar; // 重置头像
 
-        let successHtml = '<h4>'+jsonObj.data.title+' </h4>';
-        successHtml += '<a class="mdui-btn mdui-btn-raised" href="'+jsonObj.data.cover_url+'" target="_blank" download="video" referrerpolicy="no-referrer">下载封面</a>';
+        let successHtml = '<h4>' + jsonObj.data.title + ' </h4>';
+        successHtml += '<img id="avatar_thumb" class="mdui-img-circle mdui-center" style="width: 150px;" src="' + jsonObj.data.author.avatar + '" />';
+        successHtml += '<p class="mdui-text-color-theme-accent">视频作者: ' + jsonObj.data.author.name + '</p>';
+        // successHtml += '<p class="mdui-text-color-theme-accent">视频封面: <img class="mdui-center" style="width: 600px;" src="' + jsonObj.data.cover_url + '"/>';
+        successHtml += '<p class="mdui-text-color-theme-accent">视频链接: <video width=800px controls><source src="' +
+          jsonObj.data.video_url + '" type="video/mp4" poster=“' + jsonObj.data.cover_url + '”></video></p>';
+        successHtml += '<a class="mdui-btn mdui-btn-raised" href="' + jsonObj.data.cover_url + '"  download="'+jsonObj.data.title+'_封面" rel="no-referrer" target="_blank">下载封面</a>';
 
         // 如果video_url不为空, 则显示下载视频按钮
-        if(jsonObj.data.video_url != ""){
-            successHtml += '<a class="mdui-btn mdui-btn-raised" href="'+jsonObj.data.video_url+'" target="_blank" download="video" referrerpolicy="no-referrer">下载视频</a>';
+        if (jsonObj.data.video_url != "") {
+          successHtml += '<a class="mdui-btn mdui-btn-raised" href="' + jsonObj.data.video_url + '" download="'+jsonObj.data.title+'" rel="no-referrer" target=“_blank”>下载视频</a>';
         }
 
         // 如果 jsonObj.data.image_live_photos 是数组， 并且长度大于0, 则 ul, li 展示新窗口打开的链接
         if (jsonObj.data.image_live_photos && jsonObj.data.image_live_photos.length > 0) {
-            successHtml += "<hr/>";
-            successHtml += '<h4 class="mb-3">图集 LivePhoto</h4>';
-            successHtml += '<ul class="list-group">';
-            jsonObj.data.image_live_photos.forEach(function (item, index) {
-                // 仅显示序号和简短提示，而非完整链接，提升展示效果
-                successHtml += '<li class="list-group-item" style="text-align: center; margin: 1em 0;"><a href="' + item + '" target="_blank" referrerpolicy="no-referrer" class="mdui-text-color-theme-accent">图集 LivePhoto ' + (index + 1) + '</a></li>';
-            });
-            successHtml += '</ul>';
+          successHtml += "<hr/>";
+          successHtml += '<h4 class="mb-3">图集 LivePhoto</h4>';
+          successHtml += '<ul class="list-group">';
+          jsonObj.data.image_live_photos.forEach(function (item, index) {
+            // 仅显示序号和简短提示，而非完整链接，提升展示效果
+            successHtml += '<li class="list-group-item" style="text-align: center; margin: 1em 0;"><a href="' + item + '" target="_blank" referrerpolicy="no-referrer" class="mdui-text-color-theme-accent">图集 LivePhoto ' + (index + 1) + '</a></li>';
+          });
+          successHtml += '</ul>';
         }
 
         // 如果 jsonObj.data.images 是数组， 并且长度大于0, 则img展示图片
-        if(jsonObj.data.images && jsonObj.data.images.length > 0){
-            successHtml += "<hr/>";
-            successHtml += '<h4>图集</h4>';
-            jsonObj.data.images.forEach(function(item){
-                successHtml += '<img src="'+item+'" style="width: 160px; margin: 1em;"/>';
-            });
+        if (jsonObj.data.images && jsonObj.data.images.length > 0) {
+          successHtml += "<hr/>";
+          successHtml += '<h4>图集</h4>';
+          jsonObj.data.images.forEach(function (item) {
+            successHtml += '<img src="' + item + '" style="width: 160px; margin: 1em;"/>';
+          });
         }
 
         $(".down").html(successHtml);
-    }else{
+      } else {
         mdui.snackbar({
-            message: "解析失败,视频不存在或者链接不正确:<br/>" + jsonObj.msg
+          message: "解析失败,视频不存在或者链接不正确:<br/>" + jsonObj.msg
         });
+      }
     }
-}
-</script>
+    
+  </script>
 </body>
+
 </html>
