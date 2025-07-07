@@ -131,7 +131,7 @@
         successHtml += '<img id="avatar_thumb" class="mdui-img-circle mdui-center" style="width: 150px;" src="' + jsonObj.data.author.avatar + '" />';
         successHtml += '<p class="mdui-text-color-theme-accent">视频作者: ' + jsonObj.data.author.name + '</p>';
         // successHtml += '<p class="mdui-text-color-theme-accent">视频封面: <img class="mdui-center" style="width: 600px;" src="' + jsonObj.data.cover_url + '"/>';
-        successHtml += '<p class="mdui-text-color-theme-accent">视频链接: <video width=800px controls><source src="' +
+        successHtml += '<p class="mdui-text-color-theme-accent">视频链接: <video class="mdui-video-fluid" controls><source src="' +
           jsonObj.data.video_url + '" type="video/mp4" poster=“' + jsonObj.data.cover_url + '”></video></p>';
         successHtml += '<a class="mdui-btn mdui-btn-raised" href="' + jsonObj.data.cover_url + '"  download="'+jsonObj.data.title+'_封面" rel="no-referrer" target="_blank">下载封面</a>';
 
